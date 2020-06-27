@@ -113,46 +113,133 @@
 // console.log($p);
 // console.log($p.addClass);
 
-class House {
-    constructor(city){
-        this.city = city;
-    }
-    showCity(){
-        alert(`house in ${this.city}`);
-    }
+// class House {
+//     constructor(city){
+//         this.city = city;
+//     }
+//     showCity(){
+//         alert(`house in ${this.city}`);
+//     }
+// }
+
+// class People {
+//     constructor(name, house){
+//         this.name = name;
+//         this.house = house;
+//     }
+//     saySomething(){
+
+//     }
+// }
+
+// class A extends People {
+//     constructor(name, house){
+//         super(name, house);
+//     }
+//     saySomething(){
+//         alert('I am A');
+//     }
+// }
+
+// class B extends People {
+//     constructor(name, house){
+//         super(name, house);
+//     }
+//     saySomething(){
+//         alert('I am B');
+//     }
+// }
+
+// let aHouse = new House('Beijing');
+// let a = new A('a', aHouse);
+// a.saySomething();
+
+// let b = new B('b');
+// b.saySomething();
+
+// 设计模式定义
+// 按照哪一种思路或者标准来实现功能
+// 功能相同，可以有不同的设计方案来实现
+// 伴随着需求的增加，设计的作用才能体现出来
+
+// 《UNIX/LINUX设计哲学》
+// 准则1：小即是美
+// 准则2：让每个程序只做好一件事
+// 准则3：快速建立原型
+// 准则4：舍弃高效率而取可移植性
+// 准则5：采用纯文本来存储数据
+// 准则6：充分利用软件的杠杆效应（软件复用）
+// 准则7：使用shell脚本来提高杠杆效应和可移植性
+// 准则8：避免强制性的用户界面
+// 准则9：让每个程序都成为过滤器
+
+// 小准则：允许用户定制环境
+// 小准则：尽量使操作系统内核小而轻量
+// 小准则：使用小写字母并尽量简写
+// 小准则：沉默是金
+// 小准则：各部分之和大于整体
+// 小准则：寻求90%的解决方案
+
+// SOLID五大设计原则
+// S-单一职责原则(single)
+// O-开发封闭原则
+// L-李氏置换原则
+// I-接口独立原则
+// D-依赖倒置原则
+
+
+// S-单一职责原则
+// 一个程序只做好一件事
+// 如果功能过于负责就拆分开，每个部分保持独立
+
+// O-开发封闭原则
+// 对扩展开放，对修改封闭
+// 增加需求时，扩展新代码，而非修改已有代码
+// 这是软件设计的终极目标
+
+// L-李氏置换原则
+// 子类能覆盖父类
+// 父类能出现的地方子类就能出现
+// JS中使用较少
+
+// I-接口独立原则
+// 保持接口的单一独立，避免出现“胖接口”
+// JS中没有接口，使用较少
+// 类似于单一职责原则
+
+// D-依赖倒置原则
+// 面向接口编程，依赖于抽象而不依赖于具体
+// 使用方只关注接口而不关注具体类的实现
+// JS中使用较少（没有接口&弱类型）
+
+// 设计原则总结：
+// SO体现较多，详细介绍
+// LID体现较少，但是要了解其用以
+
+function loadImg(src){
+    let promise = new Promise(function(resolve, rehect){
+        let img = document.createElement('img');
+        img.onload = function(){
+            resolve(img);
+        }
+        img.onerror = function(){
+            reject('图片加载失败');
+        }
+        img.src = src;
+    });
+    return promise;
 }
 
-class People {
-    constructor(name, house){
-        this.name = name;
-        this.house = house;
-    }
-    saySomething(){
-
-    }
-}
-
-class A extends People {
-    constructor(name, house){
-        super(name, house);
-    }
-    saySomething(){
-        alert('I am A');
-    }
-}
-
-class B extends People {
-    constructor(name, house){
-        super(name, house);
-    }
-    saySomething(){
-        alert('I am B');
-    }
-}
-
-let aHouse = new House('Beijing');
-let a = new A('a', aHouse);
-a.saySomething();
-
-let b = new B('b');
-b.saySomething();
+let src = 'https://img.mukewang.com/user/5a9fc8070001a82402060220-100-100.jpg';
+let result = loadImg(src);
+result.then(function(img){
+    alert(`width: ${img.width}`);
+    return img;
+}).then(function(img){
+    alert(`height: ${img.height}`);
+    return img;
+}).then(function(img){
+    alert(img.src);
+}).catch(function(err){
+    alert(err);
+})
