@@ -269,3 +269,84 @@
 // 9、访问者模式
 // 10、中介者模式
 // 11、解释器模式
+
+// class Car{
+//     constructor(name, number, mile){
+//         this.name = name;
+//         this.number = number;
+//         this.mile = mile;
+//     }
+//     showInfo(){
+//         alert(`车名是：${this.name}，车牌号是：${this.number}`);
+//     }
+// }
+
+// class Kuai extends Car{
+//     constructor(name, number, mile){
+//         super(name, number, mile);
+//         this.price = 1;
+//     }
+//     showPrice(){
+//         alert(`总价格是：${this.price * this.mile}`);
+//     }
+// }
+
+// class Zhuan extends Car{
+//     constructor(name, number, mile){
+//         super(name, number, mile);
+//         this.price = 2;
+//     }
+//     showPrice(){
+//         alert(`总价格是：${this.price * this.mile}`);
+//     }
+// }
+
+// let car1 = new Kuai('奇瑞', '101', 5);
+// car1.showInfo();
+// car1.showPrice();
+
+// let car2 = new Zhuan('东风', '202', 5);
+// car2.showInfo();
+// car2.showPrice();
+
+// 车 父类
+class Car{
+    constructor(number, name){
+        this.number = number;
+        this.name = name;
+    }
+}
+
+// 快车
+class Kuaiche extends Car{
+    constructor(number, name){
+        super(number, name)
+        this.price = 1;
+    }
+}
+
+// 专车
+class Zhuanche extends Car{
+    constructor(number, name){
+        super(number, name)
+        this.price = 2;
+    }
+}
+
+// 行程
+class Trip {
+    constructor(car){
+        this.car = car;
+    }
+    start(){
+        console.log(`行程开始,名称:${this.car.name},车牌号:${this.car.number}`);
+    }
+    end(){
+        console.log(`行程结束,金额:` + this.car.price * 5);
+    }
+}
+
+let car = new Kuaiche(100, '桑塔纳');
+let trip = new Trip(car);
+trip.start();
+trip.end();
