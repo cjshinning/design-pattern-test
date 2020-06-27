@@ -309,44 +309,78 @@
 // car2.showInfo();
 // car2.showPrice();
 
-// 车 父类
-class Car{
-    constructor(number, name){
-        this.number = number;
+// // 车 父类
+// class Car{
+//     constructor(number, name){
+//         this.number = number;
+//         this.name = name;
+//     }
+// }
+
+// // 快车
+// class Kuaiche extends Car{
+//     constructor(number, name){
+//         super(number, name)
+//         this.price = 1;
+//     }
+// }
+
+// // 专车
+// class Zhuanche extends Car{
+//     constructor(number, name){
+//         super(number, name)
+//         this.price = 2;
+//     }
+// }
+
+// // 行程
+// class Trip {
+//     constructor(car){
+//         this.car = car;
+//     }
+//     start(){
+//         console.log(`行程开始,名称:${this.car.name},车牌号:${this.car.number}`);
+//     }
+//     end(){
+//         console.log(`行程结束,金额:` + this.car.price * 5);
+//     }
+// }
+
+// let car = new Kuaiche(100, '桑塔纳');
+// let trip = new Trip(car);
+// trip.start();
+// trip.end();
+
+
+class Product {
+    constructor(name){
         this.name = name;
     }
-}
-
-// 快车
-class Kuaiche extends Car{
-    constructor(number, name){
-        super(number, name)
-        this.price = 1;
+    init(){
+        alert('init');
+    }
+    fn1(){
+        alert('fn1');
+    }
+    fn2(){
+        alert('fn2');
     }
 }
 
-// 专车
-class Zhuanche extends Car{
-    constructor(number, name){
-        super(number, name)
-        this.price = 2;
+class Creator {
+    create(name){
+        return new Product(name);
     }
 }
 
-// 行程
-class Trip {
-    constructor(car){
-        this.car = car;
-    }
-    start(){
-        console.log(`行程开始,名称:${this.car.name},车牌号:${this.car.number}`);
-    }
-    end(){
-        console.log(`行程结束,金额:` + this.car.price * 5);
-    }
-}
+// 测试
+let creator = new Creator();
+let p = creator.create('p1');
+p.init();
+p.fn1();
 
-let car = new Kuaiche(100, '桑塔纳');
-let trip = new Trip(car);
-trip.start();
-trip.end();
+// 应用场景:
+// jQuery
+// $('div')和new $('div')有何区别?
+// 1 书写麻烦,链式操作将成为噩梦
+// 2 一旦jquery名字变化,将是灾难性的
