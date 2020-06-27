@@ -216,30 +216,56 @@
 // SO体现较多，详细介绍
 // LID体现较少，但是要了解其用以
 
-function loadImg(src){
-    let promise = new Promise(function(resolve, rehect){
-        let img = document.createElement('img');
-        img.onload = function(){
-            resolve(img);
-        }
-        img.onerror = function(){
-            reject('图片加载失败');
-        }
-        img.src = src;
-    });
-    return promise;
-}
+// function loadImg(src){
+//     let promise = new Promise(function(resolve, rehect){
+//         let img = document.createElement('img');
+//         img.onload = function(){
+//             resolve(img);
+//         }
+//         img.onerror = function(){
+//             reject('图片加载失败');
+//         }
+//         img.src = src;
+//     });
+//     return promise;
+// }
 
-let src = 'https://img.mukewang.com/user/5a9fc8070001a82402060220-100-100.jpg';
-let result = loadImg(src);
-result.then(function(img){
-    alert(`width: ${img.width}`);
-    return img;
-}).then(function(img){
-    alert(`height: ${img.height}`);
-    return img;
-}).then(function(img){
-    alert(img.src);
-}).catch(function(err){
-    alert(err);
-})
+// let src = 'https://img.mukewang.com/user/5a9fc8070001a82402060220-100-100.jpg';
+// let result = loadImg(src);
+// result.then(function(img){
+//     alert(`width: ${img.width}`);
+//     return img;
+// }).then(function(img){
+//     alert(`height: ${img.height}`);
+//     return img;
+// }).then(function(img){
+//     alert(img.src);
+// }).catch(function(err){
+//     alert(err);
+// })
+
+// 23种设计模式
+// 创建型
+// 1、工厂模式（工厂方法模式，抽象工厂模式，建造者模式）
+// 2、单例模式
+// 3、原型模式
+// 组合型
+// 1、适配器模式
+// 2、装饰器模式
+// 3、代理模式
+// 4、外观模式
+// 5、桥接模式
+// 6、组合模式
+// 7、享元模式
+// 行为型
+// 1、策略模式
+// 2、模板方法模式
+// 3、观察者模式
+// 4、迭代器模式
+// 5、职责链模式
+// 6、命令模式
+// 7、备忘录模式
+// 8、状态模式
+// 9、访问者模式
+// 10、中介者模式
+// 11、解释器模式
