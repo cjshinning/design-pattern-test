@@ -44,17 +44,17 @@
 //     console.log('length', length);
 // })
 
-const fs = require('fs');
-const readline = require('readline');
+// const fs = require('fs');
+// const readline = require('readline');
 
-let rl = readline.createInterface({
-    input: fs.createReadStream('./data/file1.txt')
-});
+// let rl = readline.createInterface({
+//     input: fs.createReadStream('./data/file1.txt')
+// });
 
-let lineNum = 0;
-rl.on('line', function(line){
-    lineNum++;
-})
-rl.on('close', function(){
-    console.log('lineNum', lineNum);
-})
+// let lineNum = 0;
+// rl.on('line', function(line){
+//     lineNum++;
+// })
+// rl.on('close', function(){
+//     console.log('lineNum', lineNum);
+// })
