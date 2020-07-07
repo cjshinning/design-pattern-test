@@ -1,223 +1,184 @@
-// 适配器模式
+// 状态模式
 // 介绍：
-// 旧接口格式和使用者不兼容
-// 中间加一个适配转换接口
-
-// 代码演示
-// class Adaptee {
-//     specificRequest(){
-//         return '德国标准插头';
-//     }
-// }
-
-// class Target {
-//     constructor(){
-//         this.adaptee = new Adaptee()
-//     }
-//     request(){
-//         let info = this.adaptee.specificRequest();
-//         return `${info} - 转换器 - 中国标准插头`;
-//     }
-// }
-
-// let target = new Target();
-// let res = target.request();
-// console.log(res);
-
-// 装饰器模式
-// 介绍：
-// 为对象添加新功能
-// 不改变其原有的结构和功能
-// class Circle {
-//     draw(){
-//         console.log('画一个圆形');
-//     }
-// }
-
-// class Decorator {
-//     constructor(circle){
-//         this.circle = circle;
-//     }
-//     draw(){
-//         this.circle.draw();
-//         this.setRedBorder(circle);
-//     }
-//     setRedBorder(circle){
-//         console.log('设置红色边框');
-//     }
-// }
-
-// let circle = new Circle();
-// circle.draw();
-
-// console.log('---------分割线---------');
-
-// let dec = new Decorator(circle);
-// dec.draw();
-
-// @testDec
-// class Demo {
-
-// }
-
-// function testDec(target){
-//     target.isDec = true;
-// }
-// alert(Demo.isDec);
-
-// function testDec(isDec){
-//     return function(target){
-//         target.isDec = isDec;
-//     }
-// }
-
-// @testDec(false)
-// class Demo {
-
-// }
-
-// alert(Demo.isDec);
-
-// function mixins(...list){
-//     return function(target){
-//         Object.assign(target.prototype, ...list);
-//     }
-// }
-
-// const Foo = {
-//     foo(){
-//         alert('foo');
-//     }
-// }
-
-// @mixins(Foo)
-// class MyClass{
-
-// }
-
-// let obj = new MyClass();
-// obj.foo();
-
-// function readOnly(target, name, descriptor){
-//     descriptor.writable = false;
-//     return descriptor;
-// }
-
-// class Person {
-//     constructor(){
-//         this.first = 'A';
-//         this.last = 'B';
-//     }
-
-//     @readOnly
-//     name(){
-//         return `${this.first} ${this.last}`;
-//     }
-// }
-
-// let p = new Person();
-// console.log(p.name());
-// p.name = function(){
-//     alert(100);
-// }
-
-// function log(target, name, descriptor){
-//     let oldValue = descriptor.value;
-//     descriptor.value = function(){
-//         console.log(`calling ${name} width ${arguments}`);
-//         return oldValue.apply(this, arguments);
-//     }
-//     return descriptor;
-// }
-
-// class Math {
-//     @log
-//     add(a, b){
-//         return a + b;
-//     }
-// }
-
-// let math = new Math();
-// const result = math.add(2, 4);
-// console.log(result);
-
-
-// 代理模式
-// 介绍：
-// 使用者无法访问目标对象
-// 中间加代理，通过代理做授权和控制
+// 一个对象有状态变化
+// 每次状态变化都会触发一个逻辑
+// 不能总是用if...else来控制
 
 // 示例：
-// 科学上网，访问github
-// 明星经纪人
-// class RealImg {
-//     constructor(filename){
-//         this.filename = filename;
-//         this.loadFromDisk();
+// 交通信号灯不同颜色的变化
+
+// 状态
+// class State {
+//     constructor(color){
+//         this.color = color;
 //     }
-//     display(){
-//         console.log('display...' + this.filename);
-//     }
-//     loadFromDisk(){
-//         console.log('loading...' + this.filename);
+//     handle(context){
+//         console.log(`turn to ${this.color}`);
+//         context.setState(this);
 //     }
 // }
 
-// class ProxyImg {
-//     constructor(filename){
-//         this.realImg = new RealImg(filename);
+// // 主体
+// class Context {
+//     constructor(){
+//         this.state = null;
 //     }
-//     display(){
-//         this.realImg.display();
+//     getState(){
+//         return this.state;
+//     }
+//     setState(state){
+//         this.state = state;
 //     }
 // }
 
-// let proxyImg = new ProxyImg('1.png');
-// proxyImg.display();
+// let context = new Context();
 
-// 明星
-let star = {
-    name: '张xx',
-    age: 25,
-    phone: '13800001111'
-}
+// let green = new State('green');
+// let yellow = new State('yellow');
+// let red = new State('red');
 
-// 经纪人
-let agent = new Proxy(star, {
-    get: function(target, key){
-        if(key === 'phone'){
-            // 返回经纪人自己的电话
-            return '16890908787';
+// // 绿灯亮了
+// green.handle(context);
+// console.log(context.getState());
+
+// // 黄灯亮了
+// yellow.handle(context);
+// console.log(context.getState());
+
+// // 红灯亮了
+// red.handle(context);
+// console.log(context.getState());
+
+// 场景:
+// 有限状态机
+
+
+// import StateMachine from 'javascript-state-machine';
+// import $ from 'jquery';
+
+// // 初始化状态机模式
+// let fsm = new StateMachine({
+//     init: '收藏',
+//     transitions: [
+//         {
+//             name: 'doStore',
+//             from: '收藏',
+//             to: '取消收藏'
+//         },
+//         {
+//             name: 'deleteStore',
+//             from: '取消收藏',
+//             to: '收藏'
+//         }
+//     ],
+//     methods: {
+//         // 监听执行收藏
+//         onDoStore: function(){
+//             alert('收藏成功');  //可以post请求
+//             updateText();
+//         },
+
+//         // 监听取消收藏
+//         onDeleteStore: function(){
+//             alert('已经取消收藏');
+//             updateText();
+//         }
+//     }
+// })
+
+// let $btn = $('#btn1');
+
+// // 按钮点击事件
+// $btn.click(function(){
+//     if(fsm.is('收藏')){
+//         fsm.doStore();
+//     }else{
+//         fsm.deleteStore();
+//     }
+// })
+
+// // 更新按钮的文案
+// function updateText(){
+//     $btn.text(fsm.state);
+// }
+
+// // 初始化文案
+// updateText();
+
+
+import StateMachine from 'javascript-state-machine';
+
+let fsm = new StateMachine({
+    init: 'pending',
+    transitions: [
+        {
+            name: 'resolve',
+            from: 'pending',
+            to: 'fullfilled'
+        },
+        {
+            name: 'reject',
+            from: 'pending',
+            to: 'rejected'
         }
-        if(key === 'price'){
-            // 明星不报价，经纪人报价
-            return 120000;
-        }
-        return target[key];
-    },
-    set: function(target, key, val){
-        if(key === 'customPrice'){
-            if(val < 100000){
-                throw new Error('价格太低');
-            }else{
-                target[key] = val;
-                return true;
-            }
+    ],
+    methods: {
+        onResolve: function(state, data){
+            // state - 当前状态机实例;
+            // data - fsm.resolve(xxx)传递来的参数
+            data.successList.forEach(fn => fn());
+        },
+        onReject: function(state, data){
+            data.failList.forEach(fn => fn());
         }
     }
 })
 
-console.log(agent.name);
-console.log(agent.age);
-console.log(agent.phone);
-console.log(agent.price);
+// 定义Promise
+class MyPromise {
+    constructor(fn){
+        this.successList = [];
+        this.failList = [];
 
-agent.customPrice = 90000;
+        fn(() => {
+            fsm.resolve(this);
+        }, () => {
+            // reject函数
+            fsm.reject(this);
+        })
+    }
+    then(successFn, failFn){
+        this.successList.push(successFn);
+        this.failList.push(failFn);
+    }
+}
 
-// 代理模式 vs 适配器模式
-// 适配器模式：提供一个不同的接口
-// 代理模式：提供一模一样的接口
+// 测试代码
+function loadImg(src){
+    const promise = new MyPromise(function(resolve, reject){
+        let img = document.createElement('img');
+        img.onload = function(){
+            resolve(img);
+        }
+        img.onerror = function(){
+            reject();
+        }
+        img.src = src;
+    })
+    return promise;
+}
 
-// 代理模式 vs 装饰器模式
-// 装饰器模式：扩展功能，原有功能不变可直接使用
-// 代码里模式：显示原有功能，但是经过限制或阉割之后的
+let src = 'https://img.mukewang.com/user/5a9fc8070001a82402060220-100-100.jpg';
+let result = loadImg(src);
+
+result.then(function(){
+    console.log('ok1');
+}, function(){
+    console.log('fail1');
+})
+
+result.then(function(){
+    console.log('ok2');
+}, function(){
+    console.log('fail2');
+})
